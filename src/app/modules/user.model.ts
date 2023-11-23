@@ -1,5 +1,10 @@
 import { Schema, model,  } from 'mongoose';
-import { Adress, Orders, IUser, UserFullName } from './user/user.schema';
+import { Adress, Orders, IUser, UserFullName } from './user/user.interface';
+
+const UserFullNameSchema = new Schema<UserFullName>({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+});
 
 const OrderSchema = new Schema<Orders>({
   productName: { type: String, required: true },
@@ -7,10 +12,6 @@ const OrderSchema = new Schema<Orders>({
   quantity: { type: Number, required: true },
 });
 
-const UserFullNameSchema = new Schema<UserFullName>({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-});
 const AdressSchema = new Schema<Adress>({
   street: { type: String, required: true },
   city: { type: String, required: true },
@@ -30,5 +31,5 @@ const userSchema = new Schema<IUser>({
   orders: { type: [OrderSchema], required: true },
 });
 
-const User = model<IUser>('User', userSchema);
+export const UserModel = model<IUser>('User', userSchema);
 
