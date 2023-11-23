@@ -1,11 +1,27 @@
-import { UserModel } from "../user.model";
-import { IUser } from "./user.interface";
+import { UserModel } from '../user.model';
+import { IUser } from './user.interface';
 
-const createStudentIntoDB = async (user : IUser)=>{
-    const result = await UserModel.create(user)
-    return result ;
-}
+const createUserIntoDB = async (user: IUser) => {
+  const result = await UserModel.create(user);
+  return result;
+};
+
+const getAllUserFromDB = async () => {
+  const result = await UserModel.find();
+  return result;
+};
+const getSingleUserFromDB = async (id: string) => {
+  const result = await UserModel.findOne({ id });
+  return result;
+};
+const updateSingleUserFromDB = async (id: string) => {
+  const result = await UserModel.updateOne({ id });
+  return result;
+};
 
 export const UserServices = {
-    createStudentIntoDB,
-}
+  createUserIntoDB,
+  getAllUserFromDB,
+  getSingleUserFromDB,
+  updateSingleUserFromDB
+};
