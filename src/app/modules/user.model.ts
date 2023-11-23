@@ -19,15 +19,15 @@ const AdressSchema = new Schema<Adress>({
 });
 
 const userSchema = new Schema<IUser>({
-  userId: { type: Number },
+  userId: { type: Number, required: true},
   userName: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: UserFullNameSchema, required: true },
   age: { type: Number, required: true },
   email: { type: String, required: true },
   isActive: { type: Boolean, required: true },
-  hobbies: [{ type: String, required: true }],
-  adress: { AdressSchema, required: true },
+  hobbies: { type: [String], required: true },
+  adress: { type: AdressSchema, required: true },
   orders: { type: [OrderSchema], required: true },
 });
 

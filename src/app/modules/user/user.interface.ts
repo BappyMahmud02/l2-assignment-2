@@ -26,5 +26,5 @@ export type IUser = {
     isActive: boolean;
     hobbies: ['playing','writing','singing'],
     adress: Adress ,
-    orders : [Orders],
+    orders?: [Orders],
   }

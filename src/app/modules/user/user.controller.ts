@@ -3,8 +3,8 @@ import { UserServices } from './user.service';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const user = req.body;
-    const result = await UserServices.createStudentIntoDB(user);
+    const {usersp : usersData} = req.body;
+    const result = await UserServices.createStudentIntoDB(usersData);
 
     res.status(200).json({
       success: true,
@@ -15,3 +15,7 @@ const createUser = async (req: Request, res: Response) => {
     console.log(err);
   }
 };
+
+export const UserControllers = {
+    createUser,
+}
