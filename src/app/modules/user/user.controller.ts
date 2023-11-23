@@ -3,7 +3,7 @@ import { UserServices } from './user.service';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const {usersp : usersData} = req.body;
+    const {Users : usersData} = req.body;
     const result = await UserServices.createStudentIntoDB(usersData);
 
     res.status(200).json({
@@ -12,7 +12,11 @@ const createUser = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({
+        success: false,
+        message: 'something went wrong',
+        error: err,
+      });
   }
 };
 
