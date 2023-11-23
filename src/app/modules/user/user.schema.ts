@@ -16,7 +16,7 @@ export type UserFullName = {
     lastName: string
 }
 
-export type User = {
+export type IUser = {
     userId : number;
     userName: string;
     password: string;
