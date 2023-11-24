@@ -21,12 +21,12 @@ const AdressSchema = new Schema<Adress>({
 });
 
 const userSchema = new Schema<IUser>({
-  userId: { type: Number, required: true },
-  userName: { type: String, required: true },
+  userId: { type: Number, required: true, unique: true },
+  userName: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fullName: { type: UserFullNameSchema, required: true },
   age: { type: Number, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true,unique: true },
   isActive: { type: Boolean, required: true },
   hobbies: [String],
   address: { type: AdressSchema, required: true },
@@ -37,9 +37,16 @@ const userSchema = new Schema<IUser>({
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_round));
-  next()
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_round),
+  );
+  next();
 });
 
+userSchema.post('save', function (doc, next) {
+  doc.password= ''
+  next();
+});
 
 export const UserModel = model<IUser>('User', userSchema);

@@ -18,10 +18,15 @@ const updateSingleUserFromDB = async (id: number) => {
   const result = await UserModel.findOneAndUpdate({ id });
   return result;
 };
+const deleteSingleUserFromDB = async (id: number) => {
+  const result = await UserModel.findOneAndDelete({ id });
+  return result;
+};
 
 export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getSingleUserFromDB,
-  updateSingleUserFromDB
+  updateSingleUserFromDB,
+  deleteSingleUserFromDB
 };
