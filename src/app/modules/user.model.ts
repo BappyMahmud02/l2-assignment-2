@@ -26,9 +26,9 @@ const userSchema = new Schema<IUser>({
   age: { type: Number, required: true },
   email: { type: String, required: true },
   isActive: { type: Boolean, required: true },
-  hobbies: { type: [String], required: true },
+  hobbies: [String],
   address: { type: AdressSchema, required: true },
-  orders: { type: [OrderSchema], required: true },
+  orders:  [OrderSchema] ,
 });
 
 

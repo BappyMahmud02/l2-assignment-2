@@ -14,8 +14,8 @@ const getSingleUserFromDB = async (id: string) => {
   const result = await UserModel.findOne({ id });
   return result;
 };
-const updateSingleUserFromDB = async (id: string) => {
-  const result = await UserModel.updateOne({ id });
+const updateSingleUserFromDB = async (id: number) => {
+  const result = await UserModel.findOneAndUpdate({ id });
   return result;
 };
 
