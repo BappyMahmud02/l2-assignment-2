@@ -1,5 +1,7 @@
-import { Schema, model,  } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { Adress, Orders, IUser, UserFullName } from './user/user.interface';
+import bcrypt from 'bcrypt';
+import config from '../config';
 
 const UserFullNameSchema = new Schema<UserFullName>({
   firstName: { type: String, required: true },
@@ -19,7 +21,7 @@ const AdressSchema = new Schema<Adress>({
 });
 
 const userSchema = new Schema<IUser>({
-  userId: { type: Number, required: true},
+  userId: { type: Number, required: true },
   userName: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: UserFullNameSchema, required: true },
@@ -28,10 +30,16 @@ const userSchema = new Schema<IUser>({
   isActive: { type: Boolean, required: true },
   hobbies: [String],
   address: { type: AdressSchema, required: true },
-  orders:  [OrderSchema] ,
+  orders: [OrderSchema],
 });
 
 
+userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_round));
+  next()
+});
+
 
 export const UserModel = model<IUser>('User', userSchema);
-
