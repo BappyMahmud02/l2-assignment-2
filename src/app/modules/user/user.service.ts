@@ -22,11 +22,21 @@ const deleteSingleUserFromDB = async (id: number) => {
   const result = await UserModel.findOneAndDelete({ id });
   return result;
 };
+const orderUserFromDB = async (id: number) => {
+  const result = await UserModel.findOne({ id });
+  return result;
+};
+const retiriveAllUserFromDB = async (id: number) => {
+  const result = await UserModel.findOne({ id });
+  return result;
+};
 
 export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getSingleUserFromDB,
   updateSingleUserFromDB,
-  deleteSingleUserFromDB
+  deleteSingleUserFromDB,
+  orderUserFromDB,
+  retiriveAllUserFromDB,
 };
