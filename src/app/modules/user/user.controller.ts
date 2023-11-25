@@ -111,7 +111,7 @@ const createdOrderFromUser = async (req: Request, res: Response) => {
       res.status(200).json({
         success: true,
         message: 'order is created successfully',
-        data: result,
+        data: null,
       });
     }else{
       result.orders?.push(userId)
@@ -156,6 +156,40 @@ const retriveAllOrderFromUser = async (req: Request, res: Response) => {
     });
   }
 };
+// order total price
+
+const totalPriceAllOrderFromUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+    const result = await UserServices.retiriveAllUserFromDB(userId);
+    if (!result) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+      return;
+    }
+
+    const totalPrice = result.orders?.reduce((sum,order)=> sum + order.price * order.quantity, 0)
+    res.json({
+      success: true,
+      message: 'Total price calculated successfully!',
+      data: {
+        totalPrice,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'something went wrong ',
+      error: err,
+    });
+  }
+};
 
 export const UserControllers = {
   createUser,
@@ -164,5 +198,6 @@ export const UserControllers = {
   getUpdateUser,
   getDeleteUser,
   createdOrderFromUser,
-  retriveAllOrderFromUser
+  retriveAllOrderFromUser,
+  totalPriceAllOrderFromUser
 };

@@ -30,6 +30,10 @@ const retiriveAllUserFromDB = async (id: number) => {
   const result = await UserModel.findOne({ id });
   return result;
 };
+const totalPriceUserFromDB = async (id: number) => {
+  const result = await UserModel.findOne({ id });
+  return result;
+};
 
 export const UserServices = {
   createUserIntoDB,
@@ -39,4 +43,5 @@ export const UserServices = {
   deleteSingleUserFromDB,
   orderUserFromDB,
   retiriveAllUserFromDB,
+  totalPriceUserFromDB
 };
