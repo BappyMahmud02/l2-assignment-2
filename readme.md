@@ -12,7 +12,7 @@ Before running the application, ensure you have the following installed:
 ## Getting Started
 
 ## Project Structure
-your-express-app/
+Assignment-2/
 │
 ├── src/
 │   ├── controllers/
