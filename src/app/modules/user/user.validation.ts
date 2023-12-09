@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const UserFullNameValidationSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
+  firstName: z.string().min(1,{message: 'First name must be required'}),
+  lastName: z.string().min(1, {message: 'Last name must be required'}),
 });
 
 const OrderValidationSchema = z.object({

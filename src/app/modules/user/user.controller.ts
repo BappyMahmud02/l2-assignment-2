@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
 import UserValidationSchema from './user.validation';
-import { UserModel } from '../user.model';
+import  UserModel  from '../user.model';
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -64,8 +64,9 @@ const getSingleUser = async (req: Request, res: Response) => {
 // update
 const getUpdateUser = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
-    const result = await UserServices.updateSingleUserFromDB(userId);
+    const updateData = req.body;
+    const id = parseInt(req.params.userId);
+    const result = await UserServices.updateSingleUserFromDB(id, updateData);
     res.status(200).json({
       success: true,
       message: 'user is updates successfully',
@@ -82,12 +83,12 @@ const getUpdateUser = async (req: Request, res: Response) => {
 // delete user
 const getDeleteUser = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
-    const result = await UserServices.deleteSingleUserFromDB(userId);
+    const userId = parseInt(req.params.userId);
+     await UserServices.deleteSingleUserFromDB(userId);
     res.status(200).json({
       success: true,
       message: 'user is deleted successfully',
-      data: result,
+      data: null,
     });
   } catch (err) {
     res.status(500).json({
@@ -159,36 +160,11 @@ const retriveAllOrderFromUser = async (req: Request, res: Response) => {
 // order total price
 
 const totalPriceAllOrderFromUser = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.body;
-    const result = await UserServices.retiriveAllUserFromDB(userId);
-    if (!result) {
-      res.status(404).json({
-        success: false,
-        message: 'User not found',
-        error: {
-          code: 404,
-          description: 'User not found!',
-        },
-      });
-      return;
-    }
-
-    const totalPrice = result.orders?.reduce((sum,order)=> sum + order.price * order.quantity, 0)
-    res.json({
-      success: true,
-      message: 'Total price calculated successfully!',
-      data: {
-        totalPrice,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: 'something went wrong ',
-      error: err,
-    });
-  }
+  const userId = parseInt(req.params.userId);
+  const result = await UserServices.totalPriceUserFromDB(userId);
+  res.json({
+    data: result,
+  });
 };
 
 export const UserControllers = {
